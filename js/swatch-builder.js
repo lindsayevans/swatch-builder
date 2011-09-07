@@ -37,9 +37,9 @@ var SwatchBuilder = (function(SwatchBuilder, $){
 
 	SwatchBuilder.colours = {
 		'#ccc': "rgb(204, 204, 204)",
-		'blue': "rgb(0, 0, 255)",
+		/*'blue': "rgb(0, 0, 255)",
 		'green': "rgb(0, 128, 0)",
-		'red': 	"rgb(255, 0, 0)"
+		'red': 	"rgb(255, 0, 0)"*/
 	};
 
 	// Public methods
@@ -66,7 +66,7 @@ var SwatchBuilder = (function(SwatchBuilder, $){
 				rgb_colours.push(SwatchBuilder.colours[i]);
 			}
 
-			console.log(ASEBuilder.generate(rgb_colours));
+			console.log(ASEBuilder.generate(rgb_colours).getBytes());
 
 		});
 	};
@@ -109,18 +109,25 @@ var SwatchBuilder = (function(SwatchBuilder, $){
 	};
 
 	ASEBuilder.ByteArray = function(){
-		this.ba = [];
+		this._bytes = [];
 	};
 
-	ASEBuilder.ByteArray.prototype.writeBytes = function(b){this.ba.push(b);};
-	ASEBuilder.ByteArray.prototype.writeUTFBytes = function(b){this.ba.push(b);};
-	ASEBuilder.ByteArray.prototype.writeInt = function(b){this.ba.push(b);};
-	ASEBuilder.ByteArray.prototype.writeShort = function(b){this.ba.push(b);};
-	ASEBuilder.ByteArray.prototype.writeFloat = function(b){this.ba.push(b);};
+	ASEBuilder.ByteArray.prototype.getBytes = function(b){return this._bytes;};
+	ASEBuilder.ByteArray.prototype.getLength = function(b){return this._bytes.length;};
+	ASEBuilder.ByteArray.prototype.writeByte = function(b){this._bytes.push(b);};
+	ASEBuilder.ByteArray.prototype.writeBytes = function(b){this._bytes = this._bytes.concat(b._bytes);};
+	ASEBuilder.ByteArray.prototype.writeUTFBytes = function(s){
+		for(var i = 0; i < s.length; i++){
+			this.writeByte(s[i].charCodeAt(0));
+		}
+	};
+	ASEBuilder.ByteArray.prototype.writeInt = function(b){this._bytes.push(b);};
+	ASEBuilder.ByteArray.prototype.writeShort = function(b){this._bytes.push(b);};
+	ASEBuilder.ByteArray.prototype.writeFloat = function(b){this._bytes.push(b);};
 
 	ASEBuilder.generate = function(pixels){
 
-		var swatch = new ASEBuilder.ByteArray(), ase = new ASEBuilder.ByteArray(), hex, pix, i = n = 0;
+		var ase = new ASEBuilder.ByteArray(), swatch = new ASEBuilder.ByteArray(), hex, pix, i = n = 0;
 
 		ase.writeUTFBytes(ASEBuilder.FILE_SIGNATURE);// header
 		ase.writeInt(0x10000);// version
@@ -159,7 +166,7 @@ var SwatchBuilder = (function(SwatchBuilder, $){
 
 			// write swatch
 
-			ase.writeInt(swatch.length);
+			ase.writeInt(swatch.getLength());
 			ase.writeBytes(swatch);
 		}
 
@@ -167,8 +174,7 @@ var SwatchBuilder = (function(SwatchBuilder, $){
 	};
 
 
-	var FILE_SIGNATURE = 'ASEF';
-
+	ASEBuilder.FILE_SIGNATURE = 'ASEF';
 	ASEBuilder.colours = {};
 
 	window.ASEBuilder = window.$ASE = ASEBuilder.initialise();
