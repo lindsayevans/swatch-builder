@@ -109,17 +109,14 @@ var SwatchBuilder = (function(SwatchBuilder, $){
 	};
 
 	ASEBuilder.ByteArray = function(){
-
-		var ba = [];
-
-		this.writeBytes = function(b){ba.push(b);};
-		this.writeUTFBytes = function(b){ba.push(b);};
-		this.writeInt = function(b){ba.push(b);};
-		this.writeShort = function(b){ba.push(b);};
-		this.writeFloat = function(b){ba.push(b);};
-
-		return ba;
+		this.ba = [];
 	};
+
+	ASEBuilder.ByteArray.prototype.writeBytes = function(b){this.ba.push(b);};
+	ASEBuilder.ByteArray.prototype.writeUTFBytes = function(b){this.ba.push(b);};
+	ASEBuilder.ByteArray.prototype.writeInt = function(b){this.ba.push(b);};
+	ASEBuilder.ByteArray.prototype.writeShort = function(b){this.ba.push(b);};
+	ASEBuilder.ByteArray.prototype.writeFloat = function(b){this.ba.push(b);};
 
 	ASEBuilder.generate = function(pixels){
 
