@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html class="no-js">
+	<head>
+		<meta charset="utf-8">
+		<title>Swatch builder</title>
+		<link rel="stylesheet" href="css/screen.css">
+		<script>document.getElementsByTagName('html')[0].className='js';</script>
+	</head>
+	<body>
+
+		<div id="main">
+			<header role="banner">
+				<h1><a href="./">Swatch builder</a></h1>
+			</header>
+
+			<form action="." role="application">
+				<div>
+					<label for="colour">Colour</label>
+					<input type="color" name="colour" id="colour" size="7">
+				</div>
+				<input type="submit" value="Add" id="add-colour">
+				<input type="submit" value="Generate ASE file" id="generate-ase">
+			</form>
+
+			<section id="palette">
+				<ul></ul>
+			</section>
+
+			<footer role="contentinfo">
+				<p>Made by <a href="https://twitter.com/lindsayevans">@lindsayevans</a></p>
+			</footer>
+		</div>
+
+		<script src="//jscdn.net/jquery.js"></script>
+		<script src="js/bytearray.js"></script>
+		<script src="js/swatch-builder.js"></script>
+
+	</body>
+</html>

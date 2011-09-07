@@ -1,0 +1,29 @@
+
+body {
+	font: 62.5%/1.3 'Helvetica Neue',Arial,sans-serif;
+	color: #666;
+	background: #fff;
+}
+
+#palette {
+	width: 100px;
+	height: 100px;
+	padding: 4px;
+	border: 1px solid #666;
+}
+
+#palette ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+#palette ul li {
+	float: left;
+	clear: none;
+	width: 10px;
+	height: 10px;
+	margin: 0;
+	padding: 0;
+	cursor: pointer;
+}
